@@ -6,7 +6,7 @@ public class MoveWithPlayer : EnemyMovementBase
 {
     [SerializeField] float maxPosY = 8f;
     [SerializeField] float minPosY = -8f;
-    [SerializeField] float maxPadding = 0.2f;
+    [SerializeField] float maxPositionPadding = 0.2f;
     Vector2 randPos;
     bool reachedY;
 
@@ -35,6 +35,6 @@ public class MoveWithPlayer : EnemyMovementBase
 
     void CheckDistance()
     {
-        if(Vector2.Distance(transform.position, randPos) <= maxPadding) {reachedY = true;}
+        if(Vector2.Distance(transform.position, randPos) <= maxPositionPadding) {reachedY = true;}
     }
 }
