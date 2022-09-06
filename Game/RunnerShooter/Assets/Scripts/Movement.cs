@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] MoveTpye moveTpye = MoveTpye.KeyMove;
     [SerializeField] float speed = 5f;
     [SerializeField] Vector2 bounds;
 
     void Update()
     {
-        if(moveTpye == MoveTpye.KeyMove) {KeyMove();}
-        if(moveTpye == MoveTpye.MoveToMouse) {MoveToMouse();}
+        if(GameManager.instance.GetPlayerMoveTpye() == GameManager.MoveTpye.KeyMove) {KeyMove();}
+        if(GameManager.instance.GetPlayerMoveTpye() == GameManager.MoveTpye.MoveToMouse) {MoveToMouse();}
     }
 
     void MoveToMouse()
@@ -63,6 +62,4 @@ public class Movement : MonoBehaviour
 
         return tempDir.normalized;
     }
-
-    public enum MoveTpye{KeyMove, MoveToMouse}
 }
