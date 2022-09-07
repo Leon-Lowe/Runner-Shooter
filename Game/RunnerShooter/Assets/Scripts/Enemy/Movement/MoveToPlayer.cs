@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveToPlayer : MonoBehaviour
+public class MoveToPlayer : EnemyMovementBase
 {
-    [SerializeField] float speed = 2f;
     [SerializeField] float stopDistance = 1f;
-    Vector2 moveDir;
     bool withinRangeOfPlayer = false;
 
     void Update()
@@ -19,7 +17,7 @@ public class MoveToPlayer : MonoBehaviour
         }
     }
 
-    void Move(float _deltaTime)
+    protected override void Move(float _deltaTime)
     {
         Vector2 currentPosition = transform.position;
         currentPosition += moveDir * speed * _deltaTime;

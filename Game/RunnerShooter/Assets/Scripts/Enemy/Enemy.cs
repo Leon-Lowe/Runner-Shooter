@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer spriteRenderer;
     int moveIndex;
+    EnemyData enemyData;
+    EnemyMovementBase movement;
+
+    public void SetEnemyData(EnemyData _enemyData){enemyData = _enemyData;}
 
     void Start()
     {
         moveIndex = Random.Range(1, 4);
-
         AddMovement();
+
+        movement.SetSpeed(enemyData.GetSpeed());
+        this.gameObject.GetComponent<LookAtTarget>().SetTarget(GameManager.instance.GetPlayerTrans());
+
+        spriteRenderer.color = enemyData.GetColour();
     }
 
     void AddMovement()
@@ -18,18 +27,18 @@ public class Enemy : MonoBehaviour
         switch(moveIndex)
         {
             case 3:
-                this.gameObject.AddComponent<StationaryMovement>();
+                movement = this.gameObject.AddComponent<StationaryMovement>();
                 break;
             case 2:
-                this.gameObject.AddComponent<MoveWithPlayer>();
+                movement = this.gameObject.AddComponent<MoveWithPlayer>();
                 break;
             case 1:
-                this.gameObject.AddComponent<MoveToPlayer>();
+                movement = this.gameObject.AddComponent<MoveToPlayer>();
                 break;
             case 0:
                 Debug.LogWarning("Move index is out of bounds!");
                 Debug.LogWarning("Adding default 'stationary movement'");
-                this.gameObject.AddComponent<StationaryMovement>();
+                movement = this.gameObject.AddComponent<StationaryMovement>();
                 break;
         }
     }

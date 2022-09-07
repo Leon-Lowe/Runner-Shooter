@@ -7,6 +7,8 @@ public class LookAtTarget : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] float speed = 2f;
 
+    public void SetTarget(Transform _target) {target = _target;}
+
     void Update()
     {
         RotateTo(Time.deltaTime);    

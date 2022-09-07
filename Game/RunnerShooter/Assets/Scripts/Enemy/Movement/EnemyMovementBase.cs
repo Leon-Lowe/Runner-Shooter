@@ -10,6 +10,8 @@ public class EnemyMovementBase : MonoBehaviour
 
     public enum MoveDirection{Up, Down, Left, Right}
 
+    public void SetSpeed(float _speed){speed = _speed;}
+
     void Awake()
     {
         SetMoveDir();    
