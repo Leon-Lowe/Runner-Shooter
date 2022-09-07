@@ -368,9 +368,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTemplate: {fileID: 6246591777677440594, guid: ef8bbeeeac261a44c80d99479748b1d3, type: 3}
-  enemeis:
+  enemies:
   - {fileID: 11400000, guid: 8d9baccaca0d7fd45afcb45f61428c36, type: 2}
   - {fileID: 11400000, guid: f48c9fc5e1493604a979f9971fe27426, type: 2}
+  maxEnemies: 10
   maxPosX: 3.5
   ySpawnPos: 9
 --- !u!4 &1548165820
