@@ -5,12 +5,18 @@ using UnityEngine;
 public class MoveToPlayer : MonoBehaviour
 {
     [SerializeField] float speed = 2f;
+    [SerializeField] float stopDistance = 1f;
     Vector2 moveDir;
+    bool withinRangeOfPlayer = false;
 
     void Update()
     {
-        moveDir = GetDirectionToPlayer();
-        Move(Time.deltaTime);    
+        withinRangeOfPlayer = CloseToPlayer();
+        if(!withinRangeOfPlayer)
+        {
+            moveDir = GetDirectionToPlayer();
+            Move(Time.deltaTime);
+        }
     }
 
     void Move(float _deltaTime)
@@ -23,5 +29,15 @@ public class MoveToPlayer : MonoBehaviour
     Vector2 GetDirectionToPlayer()
     {
         return -(transform.position - GameManager.instance.GetPlayerTrans().position).normalized;
+    }
+
+    bool CloseToPlayer()
+    {
+        if(Vector2.Distance(transform.position, GameManager.instance.GetPlayerTrans().position) <= stopDistance)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
