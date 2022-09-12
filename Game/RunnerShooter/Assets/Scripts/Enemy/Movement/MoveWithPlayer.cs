@@ -9,18 +9,11 @@ public class MoveWithPlayer : EnemyMovementBase
     [SerializeField] float maxPositionPadding = 0.2f;
     Vector2 randPos;
     bool reachedY;
-    Transform trans;
-
-    void Awake()
-    {
-        trans = transform;    
-    }
 
     void Start()
     {
         randPos = new Vector2(trans.position.x, Random.Range(minPosY, maxPosY));
         reachedY = false;
-        Debug.Log(randPos);
     }
 
     void Update()

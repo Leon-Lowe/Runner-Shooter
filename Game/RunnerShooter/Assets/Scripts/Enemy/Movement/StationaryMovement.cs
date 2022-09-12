@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class StationaryMovement : EnemyMovementBase
 {
-    Transform trans;
-
-    void Awake()
-    {
-        trans = transform;    
-    }
     void Update()
     {
         Move(Time.deltaTime);

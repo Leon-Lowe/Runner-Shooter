@@ -18,6 +18,8 @@ public class EnemySpawner : MonoBehaviour
     float spawnTimer;
     float currentSpawnTime;
 
+    public List<Transform> GetEnemiesInGame(){return enemiesInGame;}
+
     void Awake()
     {
         enemiesInGame = new List<Transform>();
@@ -25,7 +27,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        CreateEnemy(ChooseRandomX(), ChooseRandomEnemy());
+        GameManager.instance.SetEnemySpawner(this);
+        
         currentSpawnTime = ChooseSpawnTime();
     }
 
@@ -48,6 +51,7 @@ public class EnemySpawner : MonoBehaviour
     void CreateEnemy(float _xPos, EnemyData _enemyData)
     {
         GameObject newEnemy = Instantiate(enemyTemplate, new Vector2(_xPos, ySpawnPos), Quaternion.identity);
+        newEnemy.name = "Enemy_" + enemiesInGame.Count;
         Enemy newEnemyComponent = newEnemy.GetComponent<Enemy>();
         newEnemyComponent.SetMySpawner(this);
         newEnemyComponent.SetEnemyData(_enemyData);

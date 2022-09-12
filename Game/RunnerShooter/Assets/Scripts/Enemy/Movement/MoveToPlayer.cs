@@ -6,12 +6,6 @@ public class MoveToPlayer : EnemyMovementBase
 {
     [SerializeField] float stopDistance = 1f;
     bool withinRangeOfPlayer = false;
-    Transform trans;
-
-    void Awake()
-    {
-        trans = transform;    
-    }
 
     void Update()
     {

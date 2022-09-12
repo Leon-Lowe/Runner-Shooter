@@ -7,6 +7,7 @@ public class EnemyMovementBase : MonoBehaviour
     [SerializeField] protected float speed = 2f;
     [SerializeField] protected MoveDirection moveDirection = MoveDirection.Down;
     protected Vector2 moveDir;
+    protected Transform trans;
 
     public enum MoveDirection{Up, Down, Left, Right}
 
@@ -14,7 +15,8 @@ public class EnemyMovementBase : MonoBehaviour
 
     void Awake()
     {
-        SetMoveDir();    
+        SetMoveDir();   
+        trans = transform; 
     }
 
     protected virtual void Move(float _deltaTime)
