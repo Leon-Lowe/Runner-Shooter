@@ -6,6 +6,12 @@ public class MoveToPlayer : EnemyMovementBase
 {
     [SerializeField] float stopDistance = 1f;
     bool withinRangeOfPlayer = false;
+    Transform trans;
+
+    void Awake()
+    {
+        trans = transform;    
+    }
 
     void Update()
     {
@@ -19,19 +25,19 @@ public class MoveToPlayer : EnemyMovementBase
 
     protected override void Move(float _deltaTime)
     {
-        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition = trans.position;
         currentPosition += moveDir * speed * _deltaTime;
-        transform.position = currentPosition;
+        trans.position = currentPosition;
     }
 
     Vector2 GetDirectionToPlayer()
     {
-        return -(transform.position - GameManager.instance.GetPlayerTrans().position).normalized;
+        return -(trans.position - GameManager.instance.GetPlayerTrans().position).normalized;
     }
 
     bool CloseToPlayer()
     {
-        if(Vector2.Distance(transform.position, GameManager.instance.GetPlayerTrans().position) <= stopDistance)
+        if(Vector2.Distance(trans.position, GameManager.instance.GetPlayerTrans().position) <= stopDistance)
         {
             return true;
         }

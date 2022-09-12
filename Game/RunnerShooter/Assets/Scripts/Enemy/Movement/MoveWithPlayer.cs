@@ -9,10 +9,16 @@ public class MoveWithPlayer : EnemyMovementBase
     [SerializeField] float maxPositionPadding = 0.2f;
     Vector2 randPos;
     bool reachedY;
+    Transform trans;
+
+    void Awake()
+    {
+        trans = transform;    
+    }
 
     void Start()
     {
-        randPos = new Vector2(transform.position.x, Random.Range(minPosY, maxPosY));
+        randPos = new Vector2(trans.position.x, Random.Range(minPosY, maxPosY));
         reachedY = false;
         Debug.Log(randPos);
     }
@@ -24,17 +30,17 @@ public class MoveWithPlayer : EnemyMovementBase
 
     protected override void Move(float _deltaTime)
     {
-        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition = trans.position;
 
         currentPosition += moveDir * speed * _deltaTime;
 
-        transform.position = currentPosition;
+        trans.position = currentPosition;
 
         CheckDistance();
     }
 
     void CheckDistance()
     {
-        if(Vector2.Distance(transform.position, randPos) <= maxPositionPadding) {reachedY = true;}
+        if(Vector2.Distance(trans.position, randPos) <= maxPositionPadding) {reachedY = true;}
     }
 }

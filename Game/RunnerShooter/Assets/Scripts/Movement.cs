@@ -6,21 +6,29 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] float speed = 5f;
     [SerializeField] Vector2 bounds;
+    Transform trans;
+    Camera cam;
+
+    void Awake()
+    {
+        trans = transform;    
+        cam = Camera.main;
+    }
 
     void Update()
     {
-        if(GameManager.instance.GetPlayerMoveTpye() == GameManager.MoveTpye.KeyMove) {KeyMove();}
-        if(GameManager.instance.GetPlayerMoveTpye() == GameManager.MoveTpye.MoveToMouse) {MoveToMouse();}
+        if(GameManager.instance.GetPlayerMoveTpye() == GameManager.PlayerMoveTpye.KeyMove) {KeyMove();}
+        if(GameManager.instance.GetPlayerMoveTpye() == GameManager.PlayerMoveTpye.MoveToMouse) {MoveToMouse();}
     }
 
     void MoveToMouse()
     {
-        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition = trans.position;
         
-        currentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        currentPosition = cam.ScreenToWorldPoint(Input.mousePosition);
         currentPosition = ContainToBounds(currentPosition);
 
-        transform.position = currentPosition;
+        trans.position = currentPosition;
     }
 
     void KeyMove()
@@ -31,12 +39,12 @@ public class Movement : MonoBehaviour
 
     void Move(float _deltaTime, Vector2 _moveDir)
     {
-        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition = trans.position;
 
         currentPosition += _moveDir * _deltaTime * speed;
         currentPosition = ContainToBounds(currentPosition);
 
-        transform.position = currentPosition;
+        trans.position = currentPosition;
     }
 
     Vector2 ContainToBounds(Vector2 _toContain)

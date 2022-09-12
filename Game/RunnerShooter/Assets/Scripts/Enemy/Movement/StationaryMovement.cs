@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class StationaryMovement : EnemyMovementBase
 {
+    Transform trans;
+
+    void Awake()
+    {
+        trans = transform;    
+    }
     void Update()
     {
         Move(Time.deltaTime);
@@ -11,10 +17,10 @@ public class StationaryMovement : EnemyMovementBase
 
     protected override void Move(float _deltaTime)
     {
-        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition = trans.position;
 
         currentPosition += moveDir * speed * _deltaTime;
 
-        transform.position = currentPosition;
+        trans.position = currentPosition;
     }
 }

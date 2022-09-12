@@ -8,8 +8,16 @@ public class Enemy : MonoBehaviour
     int moveIndex;
     EnemyData enemyData;
     EnemyMovementBase movement;
+    EnemySpawner mySpawner;
+    Transform trans;
 
     public void SetEnemyData(EnemyData _enemyData){enemyData = _enemyData;}
+    public void SetMySpawner(EnemySpawner _mySpawner){mySpawner = _mySpawner;}
+
+    void Awake()
+    {
+        trans = transform;    
+    }
 
     void Start()
     {
@@ -20,6 +28,17 @@ public class Enemy : MonoBehaviour
         this.gameObject.GetComponent<LookAtTarget>().SetTarget(GameManager.instance.GetPlayerTrans());
 
         spriteRenderer.color = enemyData.GetColour();
+    }
+
+    void Update()
+    {
+        if(trans.position.y <= -10){Despawn();}    
+    }
+
+    void Despawn()
+    {
+        mySpawner.RemoveFromEnemiesListByReference(trans);
+        Destroy(gameObject);
     }
 
     void AddMovement()

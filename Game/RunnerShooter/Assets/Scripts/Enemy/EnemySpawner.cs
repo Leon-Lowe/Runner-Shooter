@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Header("Objects")]
     [SerializeField] GameObject enemyTemplate;
     [SerializeField] EnemyData[] enemies;
     [SerializeField] int maxEnemies = 10;
+    [Header("Spawn Position Settings")]
     [SerializeField] float maxPosX = 4f;
     [SerializeField] float ySpawnPos = 9f;
+    [Header("Spawn Timer Settings")]
+    [SerializeField] float minSpawnTime = 1f;
+    [SerializeField] float maxSpawnTime = 1.5f;
     List<Transform> enemiesInGame;
+    float spawnTimer;
+    float currentSpawnTime;
 
     void Awake()
     {
@@ -19,20 +26,31 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         CreateEnemy(ChooseRandomX(), ChooseRandomEnemy());
+        currentSpawnTime = ChooseSpawnTime();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L) && enemiesInGame.Count < maxEnemies)
+        if(enemiesInGame.Count < maxEnemies){HandleSpawn(Time.deltaTime);}
+    }
+
+    void HandleSpawn(float _deltaTime)
+    {
+        spawnTimer += _deltaTime;
+        if (spawnTimer >= currentSpawnTime)
         {
             CreateEnemy(ChooseRandomX(), ChooseRandomEnemy());
+            spawnTimer -= currentSpawnTime;
+            currentSpawnTime = ChooseSpawnTime();
         }
     }
 
     void CreateEnemy(float _xPos, EnemyData _enemyData)
     {
         GameObject newEnemy = Instantiate(enemyTemplate, new Vector2(_xPos, ySpawnPos), Quaternion.identity);
-        newEnemy.GetComponent<Enemy>().SetEnemyData(_enemyData);
+        Enemy newEnemyComponent = newEnemy.GetComponent<Enemy>();
+        newEnemyComponent.SetMySpawner(this);
+        newEnemyComponent.SetEnemyData(_enemyData);
         enemiesInGame.Add(newEnemy.transform);
     }
 
@@ -45,5 +63,12 @@ public class EnemySpawner : MonoBehaviour
     {
         int randEnemyIndex = Random.Range(0, enemies.Length);
         return enemies[randEnemyIndex];
+    }
+
+    float ChooseSpawnTime(){return Random.Range(minSpawnTime, maxSpawnTime);}
+
+    public void RemoveFromEnemiesListByReference(Transform _transformRef)
+    {
+        enemiesInGame.Remove(_transformRef);
     }
 }

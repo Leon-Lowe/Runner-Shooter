@@ -6,6 +6,12 @@ public class LookAtTarget : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] float speed = 2f;
+    Transform trans;
+
+    void Awake()
+    {
+        trans = transform;    
+    }
 
     public void SetTarget(Transform _target) {target = _target;}
 
@@ -16,8 +22,8 @@ public class LookAtTarget : MonoBehaviour
 
     void RotateTo(float _deltaTime)
     {
-        float angle = Mathf.Atan2(target.position.y - transform.position.y, target.position.x -transform.position.x ) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(target.position.y - trans.position.y, target.position.x -trans.position.x ) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90f));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, speed * _deltaTime);
+        transform.rotation = Quaternion.RotateTowards(trans.rotation, targetRotation, speed * _deltaTime);
     }
 }
